@@ -1,11 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { Provider as PaperProvider } from 'react-native-paper';
+
+import WdHeader from './components/WdHeader'
+import AddWorkout from './components/AddWorkouts'
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js toon your app!</Text>
-      <StatusBar style="auto" />
+      <WdHeader />
     </View>
   );
 }
@@ -13,8 +16,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: 'white',
   },
+  footerContainer: { backgroundColor: '#333333'},
 });
