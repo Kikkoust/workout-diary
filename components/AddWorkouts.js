@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
-import { ScrollView, Text, StyleSheet, TextInput, Image, View, Pressable } from 'react-native';
-
+import { Text, TextInput, Image, View, Pressable, StyleSheet } from 'react-native';
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function AddWorkouts() {
+  const [distance, setDistance] = useState('');
+  const [time, setTime] = useState('');
+  const [day, setDay] = useState(new Date());
+  const [dateOfWorkout, setDateOfWorkout] = useState(false);
 
-const [distance, setDistance] = useState('');
-const [time, setTime] = useState('');
-const [day, setDay] = useState(new Date());
+  const onChange = (event, selectedDate) => {
+    setDateOfWorkout(false); 
+    if (selectedDate) {
+      setDay(selectedDate);
+    }
+  };
 
-const addWorkout = () => {
-  console.log("Workout added", { distance, time, day});
-};
-
-
+  const addWorkout = () => {
+    console.log("Workout added", { distance, time, day });
+  };
 
   return (
     <View style={addimgStyles.img}>
@@ -31,7 +36,7 @@ const addWorkout = () => {
             value={distance}
             onChangeText={setDistance}
             keyboardType="numeric"
-            placeholder="Set"
+            placeholder="Set distance"
             placeholderTextColor="#FFF5E0"
             style={addcontentStyles.input}
           />
@@ -43,7 +48,7 @@ const addWorkout = () => {
             value={time}
             onChangeText={setTime}
             keyboardType="numeric"
-            placeholder="Set"
+            placeholder="Set time"
             placeholderTextColor="#FFF5E0"
             style={addcontentStyles.input}
           />
@@ -51,11 +56,23 @@ const addWorkout = () => {
 
         <View style={addcontentStyles.inputContainer}>
           <Text style={addcontentStyles.text}>Day</Text>
-          <TextInput
-            value={day.toDateString()}
-            editable={false}
-            style={addcontentStyles.input}
-          />
+
+          <Pressable onPress={() => setDateOfWorkout(true)}>
+            <TextInput
+              value={day.toDateString()}
+              editable={false}
+              style={addcontentStyles.input}
+            />
+          </Pressable>
+
+          {dateOfWorkout && (
+            <DateTimePicker
+              mode="date"
+              display="calendar"
+              value={day}
+              onChange={onChange}
+            />
+          )}
         </View>
       </View>
 
@@ -66,7 +83,7 @@ const addWorkout = () => {
       </View>
     </View>
   );
-  }
+}
 
 const addimgStyles = StyleSheet.create({
     img: {
@@ -103,8 +120,8 @@ const addcontentStyles = StyleSheet.create({
   },
 
   input: {
-    height: 60,
-    padding: 3,
+    height: 'auto',
+    width: 90,
     textAlign: 'center',
     color: '#FFF5E0',
   
