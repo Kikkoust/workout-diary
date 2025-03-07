@@ -9,14 +9,13 @@ export default function AddWorkouts() {
   const [day, setDay] = useState(new Date());
   const [dateOfWorkout, setDateOfWorkout] = useState(false);
   const [workouts, setWorkouts] = useState([]);
-
+  const [selectedWorkoutType, setSelectedWorkoutType] = useState('Running');
 
   const addWorkout = () => {
-    const newWorkout = { distance, time, day: day.toDateString() };
+    const newWorkout = { distance, time, day: day.toDateString(), type: selectedWorkoutType };
     setWorkouts((prevWorkouts) => [...prevWorkouts, newWorkout]);
 
     console.log("Workout added", newWorkout);
-
 
     setDistance('');
     setTime('');
@@ -40,6 +39,7 @@ export default function AddWorkouts() {
         resizeMode="contain"
       />
 
+      {/*SET DISTANCE*/}
       <View style={addcontentStyles.container}>
         <View style={addcontentStyles.inputContainer}>
           <Text style={addcontentStyles.text}>Distance (km)</Text>
@@ -53,6 +53,7 @@ export default function AddWorkouts() {
           />
         </View>
 
+        {/*SET TIME*/}
         <View style={addcontentStyles.inputContainer}>
           <Text style={addcontentStyles.text}>Time (minutes)</Text>
           <TextInput
@@ -65,6 +66,7 @@ export default function AddWorkouts() {
           />
         </View>
 
+        {/*SET DAY/DATETIMEPICKER*/}
         <View style={addcontentStyles.inputContainer}>
           <Text style={addcontentStyles.text}>Day</Text>
 
@@ -86,14 +88,36 @@ export default function AddWorkouts() {
           )}
         </View>
       </View>
+      
 
+      {/*ADD WORKOUT BUTTON*/}
       <View>
-        <Pressable style={[buttonStyles.button, !isFormValid && { backgroundColor: 'grey'}]} onPress={addWorkout}
-        disabled={!isFormValid}>
+        <Pressable style={[buttonStyles.button, !isFormValid && { backgroundColor: 'grey' }]} onPress={addWorkout} disabled={!isFormValid}>
           <Text style={buttonStyles.buttonText}>ADD WORKOUT</Text>
         </Pressable>
       </View>
 
+
+      {/* WORKOUT TYPES */}
+      <View>
+        {['Running', 'Swimming', 'Biking'].map((type) => (
+          <Pressable
+            key={type}
+            onPress={() => setSelectedWorkoutType(type)}
+          >
+            <Text>{type}</Text>
+          </Pressable>
+        ))}
+      </View>
+
+
+      {/*WHAT WORKOUT IS SELECTED*/}
+      <View>
+        <Text>Selected workout type: {selectedWorkoutType}</Text>
+      </View>
+
+
+      {/*SCROLLABLE WORKOUT LIST*/}
       <FlatList
         data={workouts}
         keyExtractor={(item, index) => index.toString()}
@@ -102,13 +126,13 @@ export default function AddWorkouts() {
             <Text>Distance: {item.distance} km</Text>
             <Text>Time: {item.time} minutes</Text>
             <Text>Day: {item.day}</Text>
+            <Text>Type: {item.type}</Text>
           </View>
         )}
       />
     </View>
   );
 }
-
 
 const addimgStyles = StyleSheet.create({
     img: {
@@ -180,4 +204,6 @@ const buttonStyles = StyleSheet.create({
     fontSize: 22,
   },
 });
+
+
 
