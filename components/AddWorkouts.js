@@ -1,23 +1,34 @@
 import React, { useState } from 'react';
-import { Text, TextInput, Image, View, Pressable, StyleSheet } from 'react-native';
+import { Text, TextInput, Image, View, Pressable, StyleSheet, FlatList } from 'react-native';
 import DateTimePicker from "@react-native-community/datetimepicker";
+
 
 export default function AddWorkouts() {
   const [distance, setDistance] = useState('');
   const [time, setTime] = useState('');
   const [day, setDay] = useState(new Date());
   const [dateOfWorkout, setDateOfWorkout] = useState(false);
+  const [workouts, setWorkouts] = useState([]);
 
-  const onChange = (event, selectedDate) => {
-    setDateOfWorkout(false); 
-    if (selectedDate) {
-      setDay(selectedDate);
-    }
-  };
 
   const addWorkout = () => {
-    console.log("Workout added", { distance, time, day });
+    const newWorkout = { distance, time, day: day.toDateString() };
+    setWorkouts((prevWorkouts) => [...prevWorkouts, newWorkout]);
+
+    console.log("Workout added", newWorkout);
+
+
+    setDistance('');
+    setTime('');
   };
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || day;
+    setDateOfWorkout(false);
+    setDay(currentDate);
+  };
+
+  const isFormValid = distance && time;
 
   return (
     <View style={addimgStyles.img}>
@@ -77,13 +88,27 @@ export default function AddWorkouts() {
       </View>
 
       <View>
-        <Pressable style={buttonStyles.button} onPress={addWorkout}>
+        <Pressable style={[buttonStyles.button, !isFormValid && { backgroundColor: 'grey'}]} onPress={addWorkout}
+        disabled={!isFormValid}>
           <Text style={buttonStyles.buttonText}>ADD WORKOUT</Text>
         </Pressable>
       </View>
+
+      <FlatList
+        data={workouts}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <View>
+            <Text>Distance: {item.distance} km</Text>
+            <Text>Time: {item.time} minutes</Text>
+            <Text>Day: {item.day}</Text>
+          </View>
+        )}
+      />
     </View>
   );
 }
+
 
 const addimgStyles = StyleSheet.create({
     img: {
