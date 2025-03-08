@@ -29,15 +29,34 @@ export default function AddWorkouts() {
 
   const isFormValid = distance && time;
 
+  const getWorkoutImage = () => {
+    switch (selectedWorkoutType) {
+      case 'Running':
+        return require('../img/running.png');
+      case 'Swimming':
+        return require('../img/swimming.png');
+      case 'Biking':
+        return require('../img/biking.png');
+
+    }
+  };
+
   return (
-    <View style={addimgStyles.img}>
-      <Image
-        style={addimgStyles.image}
-        source={require('../img/running.png')}
-        accessible={true}
-        accessibilityLabel='Running logo'
-        resizeMode="contain"
-      />
+    <View style={addStyles.add}>
+
+      {/*SELECTED WORKOUT ICON*/}
+      <Text>
+      {getWorkoutImage() && (
+        <Image source={getWorkoutImage()} resizeMode="contain" />
+      )}
+      </Text>
+
+      {/*WHAT WORKOUT IS SELECTED*/}
+      <View>
+        <Text>Selected workout type: {selectedWorkoutType}
+        </Text>
+      </View>
+
 
       {/*SET DISTANCE*/}
       <View style={addcontentStyles.container}>
@@ -111,11 +130,6 @@ export default function AddWorkouts() {
       </View>
 
 
-      {/*WHAT WORKOUT IS SELECTED*/}
-      <View>
-        <Text>Selected workout type: {selectedWorkoutType}</Text>
-      </View>
-
 
       {/*SCROLLABLE WORKOUT LIST*/}
       <FlatList
@@ -134,20 +148,15 @@ export default function AddWorkouts() {
   );
 }
 
-const addimgStyles = StyleSheet.create({
-    img: {
+const addStyles = StyleSheet.create({
+    add: {
         backgroundColor: '',
-        alignItems: 'center', //img center
+        alignItems: 'center',
         justifyContent: 'center',
         padding: 4,
         
     },
-  
-    image: {
-        width: 60, 
-        height: 60, 
-    },
-  });
+  })
 
 
 
