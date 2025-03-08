@@ -52,8 +52,8 @@ export default function AddWorkouts() {
       </Text>
 
       {/*WHAT WORKOUT IS SELECTED*/}
-      <View>
-        <Text>Selected workout type: {selectedWorkoutType}
+      <View style={selectedStyles.selected}>
+        <Text style={selectedStyles.text}>Selected workout type: {selectedWorkoutType}
         </Text>
       </View>
 
@@ -116,51 +116,71 @@ export default function AddWorkouts() {
         </Pressable>
       </View>
 
+      {/*SCROLLABLE WORKOUT LIST*/}
+      <FlatList
+        style={listStyles.listContainer}
+        data={workouts}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <View style={listStyles.list}>
+            <Text style={listStyles.text}>Distance: {item.distance} km</Text>
+            <Text style={listStyles.text}>Time: {item.time} minutes</Text>
+            <Text style={listStyles.text}>Day: {item.day}</Text>
+            <Text style={listStyles.text}>Type: {item.type}</Text>
+          </View>
+        )}
+      />
+
+      <View>
+        <Text></Text>
+
+      </View>
 
       {/* WORKOUT TYPES */}
-      <View>
+      <View style={selectWorkoutStyles.container}>
         {['Running', 'Swimming', 'Biking'].map((type) => (
           <Pressable
+          style={[
+            selectWorkoutStyles.button,
+            selectedWorkoutType === type && selectWorkoutStyles.selectedButton
+          ]}
             key={type}
             onPress={() => setSelectedWorkoutType(type)}
           >
-            <Text>{type}</Text>
+            <Text style={[
+            selectWorkoutStyles.text,
+            selectedWorkoutType === type && selectWorkoutStyles.selectedText
+          ]}>{type}</Text>
           </Pressable>
         ))}
       </View>
 
-
-
-      {/*SCROLLABLE WORKOUT LIST*/}
-      <FlatList
-        data={workouts}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <View>
-            <Text>Distance: {item.distance} km</Text>
-            <Text>Time: {item.time} minutes</Text>
-            <Text>Day: {item.day}</Text>
-            <Text>Type: {item.type}</Text>
-          </View>
-        )}
-      />
     </View>
   );
 }
 
+/*BODY STYLES*/
 const addStyles = StyleSheet.create({
     add: {
         backgroundColor: '',
         alignItems: 'center',
-        justifyContent: 'center',
-        padding: 4,
-        
+        padding: 2,
     },
   })
 
+const selectedStyles = StyleSheet.create({
+  selected: {
+    marginBottom: 14,
+  },
+  text:{
+    fontWeight: 'bold',
+    color: '#141E46',
+  },
+});
 
 
-/* INPUT STYLES */
+
+/*SET DISTANCE/TIME/DAY STYLES*/
 const addcontentStyles = StyleSheet.create({
   container: {
     flexDirection: 'row', 
@@ -212,6 +232,68 @@ const buttonStyles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 22,
   },
+});
+
+/*WORKOUT LIST STYLES*/
+const listStyles = StyleSheet.create({
+  listContainer:{
+    backgroundColor: '#141E46',
+    width: 330,
+    height: 270,
+    borderRadius: 10,
+    marginTop: 30,
+
+  },
+
+  list:{
+    backgroundColor: '#141E46',
+    padding: 10,
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#FFF5E0',
+  },
+
+  text:{
+    fontWeight: 'bold',
+    color: '#FFF5E0',
+
+  },
+});
+
+const selectWorkoutStyles = StyleSheet.create({
+  container:{
+    flexDirection: 'row',
+  },
+  
+  button:{
+    backgroundColor:'#141E46',
+    flexDirection: 'row',
+    padding: 30,
+    borderRadius: 20,
+    borderWidth: 1,
+    margin: 10,
+  },
+
+  text:{
+    fontWeight: 'bold',
+    color: '#FFF5E0'
+  },
+
+  /*SELECTED BUTTON STYLE*/
+  selectedButton: {
+    backgroundColor: '#F06543',
+    shadowColor: 'black',
+    
+
+    
+  },
+
+  selectedText: {
+    color: '#141E46',
+    fontWeight: 'bold',
+
+  },
+
 });
 
 
