@@ -41,6 +41,10 @@ export default function AddWorkouts() {
 
     }
   };
+  
+  const getTotalDistance = () => {
+    return workouts.reduce((total, workout) => total + parseFloat(workout.distance), 0);
+  };
 
   return (
     <View style={addStyles.add}>
@@ -144,9 +148,9 @@ export default function AddWorkouts() {
         )}
       />
 
+      {/*TOTAL DISTANCE*/}
       <View>
-        <Text></Text>
-
+        <Text>Total Distance: {getTotalDistance()} km</Text>
       </View>
 
       {/* WORKOUT TYPES */}
