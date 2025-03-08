@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Text, TextInput, Image, View, Pressable, StyleSheet, FlatList } from 'react-native';
 import DateTimePicker from "@react-native-community/datetimepicker";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 export default function AddWorkouts() {
@@ -87,13 +88,13 @@ export default function AddWorkouts() {
 
         {/*SET DAY/DATETIMEPICKER*/}
         <View style={addcontentStyles.inputContainer}>
-          <Text style={addcontentStyles.text}>Day</Text>
+          <Text style={addcontentStyles.text}>Select day</Text>
 
           <Pressable onPress={() => setDateOfWorkout(true)}>
             <TextInput
               value={day.toDateString()}
               editable={false}
-              style={addcontentStyles.input}
+              style={addcontentStyles.calendarText}
             />
           </Pressable>
 
@@ -123,10 +124,22 @@ export default function AddWorkouts() {
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View style={listStyles.list}>
-            <Text style={listStyles.text}>Distance: {item.distance} km</Text>
-            <Text style={listStyles.text}>Time: {item.time} minutes</Text>
-            <Text style={listStyles.text}>Day: {item.day}</Text>
-            <Text style={listStyles.text}>Type: {item.type}</Text>
+            <Text style={listStyles.text}>
+              <Icon name="arrows-h" size={14} color="#FFF5E0" />
+              {' '}
+              Distance: {item.distance} km</Text>
+
+            <Text style={listStyles.text}>
+              <Icon name="clock-o" size={14} color="#FFF5E0" />
+              {' '}
+              Time: {item.time} minutes</Text>
+
+            <Text style={listStyles.text}>
+              <Icon name="calendar" size={14} color="#FFF5E0" />
+              {' '}
+              Day: {item.day}</Text>
+
+            <Text style={listStyles.text}>{item.type}</Text>
           </View>
         )}
       />
@@ -191,8 +204,8 @@ const addcontentStyles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#141E46',
     marginHorizontal: 15,
-    width: '90',
-    height: '120',
+    width: 90,
+    height: 120,
     justifyContent: 'center',
     borderRadius: 10,
   },
@@ -210,7 +223,14 @@ const addcontentStyles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     margin: 10,
-  }
+  },
+
+  calendarText: {
+    width: 90,
+    height: 40,
+    color: '#FFF5E0',
+    marginTop: 16,
+  },
 });
 
 /* BUTTON STYLES */
@@ -254,10 +274,12 @@ const listStyles = StyleSheet.create({
   },
 
   text:{
+    fontSize: 14,
     fontWeight: 'bold',
     color: '#FFF5E0',
 
   },
+
 });
 
 const selectWorkoutStyles = StyleSheet.create({
