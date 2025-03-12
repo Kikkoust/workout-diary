@@ -143,23 +143,23 @@ export default function AddWorkouts() {
         <Button 
         title="Running"
         onPress={() => openWorkoutList('Running')}
-        color="blue"/>
+        color="#141E46"/>
         <Button 
         title="Swimming"
         onPress={() => openWorkoutList('Swimming')}
-        color="blue"/>
+        color="#141E46"/>
         <Button 
         title="Biking"
         onPress={() => openWorkoutList('Biking')}
-        color="blue"/>
+        color="#141E46"/>
       </View>
 
       <Modal visible={isModalVisible}>
-        <View style={{ flex: 1, backgroundColor:"blue"}}>
+        <View style={{ flex: 1, backgroundColor:"#141E46" }}>
         <FlatList
-      data={selectedWorkoutList}
-      keyExtractor={(item, index) => index.toString()}
-      renderItem={({ item }) => (
+        data={selectedWorkoutList}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
         <View>
           <Text>Distance: {item.distance} km</Text>
           <Text>Time: {item.time} minutes</Text>
@@ -167,9 +167,11 @@ export default function AddWorkouts() {
         </View>
       )}
     />
+
+    
           <Button title="Close"
           onPress={() => setIsModalVisible(false)}
-          color="blue"/>
+          color="#F06543"/>
         </View>
       </Modal>
 
@@ -377,7 +379,8 @@ const selectWorkoutStyles = StyleSheet.create({
 
 const totalDistances = StyleSheet.create({
   total:{
-    flexDirection: 'row'
+    flexDirection: 'row',
+
   },
 })
 

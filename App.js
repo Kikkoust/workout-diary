@@ -14,7 +14,7 @@ export default function App() {
       <WdHeader />
       <AddWorkout />
 
-
+      
     </View>
   );
 };
