@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, TextInput, Image, View, Pressable, StyleSheet, FlatList } from 'react-native';
+import { Text, TextInput, Image, View, Pressable, StyleSheet, FlatList, Modal, Button } from 'react-native';
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -11,6 +11,8 @@ export default function AddWorkouts() {
   const [dateOfWorkout, setDateOfWorkout] = useState(false);
   const [workouts, setWorkouts] = useState([]);
   const [selectedWorkoutType, setSelectedWorkoutType] = useState('Running');
+  const [selectedWorkoutList, setSelectedWorkoutList] = useState([]);
+  const [modalTitle, setModalTitle] = useState('');
 
   const addWorkout = () => {
     const newWorkout = { distance, time, day: day.toDateString(), type: selectedWorkoutType };
@@ -42,8 +44,21 @@ export default function AddWorkouts() {
     }
   };
   
-  const getTotalDistance = () => {
-    return workouts.reduce((total, workout) => total + parseFloat(workout.distance), 0);
+
+
+  const getTotalDistance = (type) => {
+    return workouts
+      .filter((workout) => workout.type === type)
+      .reduce((total, workout) => total + parseFloat(workout.distance), 0);
+  };
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const openWorkoutList = (type) => {
+    const filteredWorkouts = workouts.filter(workout => workout.type === type);
+    setSelectedWorkoutList(filteredWorkouts);
+    setModalTitle(`All ${type} Workouts`);
+    setIsModalVisible(true);
   };
 
   return (
@@ -120,6 +135,43 @@ export default function AddWorkouts() {
           <Text style={buttonStyles.buttonText}>ADD WORKOUT</Text>
         </Pressable>
       </View>
+      
+      {/*MODAL*/}
+      <Text>View all workouts</Text>
+      
+      <View style={totalDistances.total}>
+        <Button 
+        title="Running"
+        onPress={() => openWorkoutList('Running')}
+        color="blue"/>
+        <Button 
+        title="Swimming"
+        onPress={() => openWorkoutList('Swimming')}
+        color="blue"/>
+        <Button 
+        title="Biking"
+        onPress={() => openWorkoutList('Biking')}
+        color="blue"/>
+      </View>
+
+      <Modal visible={isModalVisible}>
+        <View style={{ flex: 1, backgroundColor:"blue"}}>
+        <FlatList
+      data={selectedWorkoutList}
+      keyExtractor={(item, index) => index.toString()}
+      renderItem={({ item }) => (
+        <View>
+          <Text>Distance: {item.distance} km</Text>
+          <Text>Time: {item.time} minutes</Text>
+          <Text>Date: {item.day}</Text>
+        </View>
+      )}
+    />
+          <Button title="Close"
+          onPress={() => setIsModalVisible(false)}
+          color="blue"/>
+        </View>
+      </Modal>
 
       {/*SCROLLABLE WORKOUT LIST*/}
       <FlatList
@@ -150,7 +202,8 @@ export default function AddWorkouts() {
 
       {/*TOTAL DISTANCE*/}
       <View>
-        <Text>Total Distance: {getTotalDistance()} km</Text>
+        <Text>Total distances</Text>
+        <Text style={totalDistances.total}>Running: {getTotalDistance('Running')} km Swimming: {getTotalDistance('Swimming')} km Biking: {getTotalDistance('Biking')} km</Text>
       </View>
 
       {/* WORKOUT TYPES */}
@@ -321,6 +374,12 @@ const selectWorkoutStyles = StyleSheet.create({
   },
 
 });
+
+const totalDistances = StyleSheet.create({
+  total:{
+    flexDirection: 'row'
+  },
+})
 
 
 
