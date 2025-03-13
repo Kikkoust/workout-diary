@@ -140,18 +140,26 @@ export default function AddWorkouts() {
       <Text style={{ fontWeight: 'bold', marginTop: 10, }}>View all workouts</Text>
       
       <View style={modalStyles.buttonContainer}>
-        <Button 
-        title="Running"
+        <Pressable 
+        style={modalStyles.button}
         onPress={() => openWorkoutList('Running')}
-        color="#141E46"/>
-        <Button 
-        title="Swimming"
+        >
+        <Text style={modalStyles.buttonText}>Running</Text>
+        </Pressable>
+  
+        <Pressable 
+        style={modalStyles.button}
         onPress={() => openWorkoutList('Swimming')}
-        color="#141E46"/>
-        <Button 
-        title="Biking"
+        >
+        <Text style={modalStyles.buttonText}>Swimming</Text>
+        </Pressable>
+  
+        <Pressable 
+        style={modalStyles.button}
         onPress={() => openWorkoutList('Biking')}
-        color="#141E46"/>
+        >
+        <Text style={modalStyles.buttonText}>Biking</Text>
+        </Pressable>
       </View>
 
       {/*MODAL VIEW*/}
@@ -347,19 +355,26 @@ const listStyles = StyleSheet.create({
 const selectWorkoutStyles = StyleSheet.create({
   container:{
     flexDirection: 'row',
+    marginTop: 12,
   },
   
   button:{
     backgroundColor:'#141E46',
     flexDirection: 'row',
-    padding: 30,
+    padding: 20,
     borderWidth: 1,
     margin: 10,
+    width: 120,
+  
+    justifyContent: 'center',
+
+
   },
 
   text:{
     fontWeight: 'bold',
-    color: '#FFF5E0'
+    color: '#FFF5E0',
+    fontSize: 16,
   },
 
   /*SELECTED BUTTON STYLE*/
@@ -371,6 +386,7 @@ const selectWorkoutStyles = StyleSheet.create({
   selectedText: {
     color: '#141E46',
     fontWeight: 'bold',
+    fontSize: 16,
   },
 
 });
@@ -390,11 +406,9 @@ const totalDistances = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     backgroundColor: '#141E46',
-    marginTop: 6,
+    marginTop: 10,
     color: '#F06543',
   },
-
-
 })
 
 
@@ -416,12 +430,29 @@ const modalStyles = StyleSheet.create({
     padding: 5,
     fontSize: 16,
   },
-
+  
+  
+  /*MODAL WORKOUT SELECT BUTTONS STYLES*/
   buttonContainer:{
     flexDirection: 'row',
   },
 
-  button: {
+
+  button:{
+
+    marginHorizontal: 8,
+    backgroundColor: '#141E46',
+    width: 110,
+
+  },
+
+  buttonText:{
+    color: 'white',
+    margin: 10,
+    textAlign: 'center',
+    fontSize: 14,
+    fontWeight: 'bold'
     
   }
+
 })
