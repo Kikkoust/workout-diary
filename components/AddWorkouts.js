@@ -186,7 +186,7 @@ export default function AddWorkouts() {
         <View style={modalStyles.list}>
           <Text style={modalStyles.text}>Distance: {item.distance} km</Text>
           <Text style={modalStyles.text}>Time: {item.time} minutes</Text>
-          <Text style={modalStyles.text}>Date: {item.day}</Text>
+          <Text style={modalStyles.text}>Day: {item.day}</Text>
         </View>
       )}
     />
