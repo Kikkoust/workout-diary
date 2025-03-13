@@ -16,7 +16,7 @@ export default function AddWorkouts() {
 
   const addWorkout = () => {
     const newWorkout = { distance, time, day: day.toDateString(), type: selectedWorkoutType };
-    setWorkouts((prevWorkouts) => [...prevWorkouts, newWorkout]);
+    setWorkouts((prevWorkouts) => [newWorkout, ...prevWorkouts]);
 
     console.log("Workout added", newWorkout);
 
