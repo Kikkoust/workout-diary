@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, Text, StyleSheet, TextInput, Image, View } from 'react-native';
+import { StyleSheet, Image, View } from 'react-native';
 
 export default function WdHeader() {
   return (
