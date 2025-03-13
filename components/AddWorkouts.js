@@ -136,10 +136,10 @@ export default function AddWorkouts() {
         </Pressable>
       </View>
       
-      {/*MODAL*/}
-      <Text>View all workouts</Text>
+      {/*MODAL BUTTONS*/}
+      <Text style={{ fontWeight: 'bold', marginTop: 10, }}>View all workouts</Text>
       
-      <View style={totalDistances.total}>
+      <View style={modalStyles.buttonContainer}>
         <Button 
         title="Running"
         onPress={() => openWorkoutList('Running')}
@@ -154,21 +154,23 @@ export default function AddWorkouts() {
         color="#141E46"/>
       </View>
 
+      {/*MODAL VIEW*/}
       <Modal visible={isModalVisible}>
-        <View style={{ flex: 1, backgroundColor:"#141E46" }}>
+        <View style={{ flex: 1, backgroundColor:"#141E46"}}>
+          {/*MODAL TITLE*/}
+          <Text style={modalStyles.text}>{modalTitle}</Text>
+        {/*MODAL LIST*/}
         <FlatList
         data={selectedWorkoutList}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
-        <View>
-          <Text>Distance: {item.distance} km</Text>
-          <Text>Time: {item.time} minutes</Text>
-          <Text>Date: {item.day}</Text>
+        <View style={modalStyles.list}>
+          <Text style={modalStyles.text}>Distance: {item.distance} km</Text>
+          <Text style={modalStyles.text}>Time: {item.time} minutes</Text>
+          <Text style={modalStyles.text}>Date: {item.day}</Text>
         </View>
       )}
     />
-
-    
           <Button title="Close"
           onPress={() => setIsModalVisible(false)}
           color="#F06543"/>
@@ -204,7 +206,7 @@ export default function AddWorkouts() {
 
       {/*TOTAL DISTANCE*/}
       <View>
-        <Text>Total distances</Text>
+        <Text style={totalDistances.text}>Total distances</Text>
         <Text style={totalDistances.total}>Running: {getTotalDistance('Running')} km Swimming: {getTotalDistance('Swimming')} km Biking: {getTotalDistance('Biking')} km</Text>
       </View>
 
@@ -341,6 +343,7 @@ const listStyles = StyleSheet.create({
 
 });
 
+/*SELECT WORKOUT TYPE STYLES*/
 const selectWorkoutStyles = StyleSheet.create({
   container:{
     flexDirection: 'row',
@@ -350,7 +353,6 @@ const selectWorkoutStyles = StyleSheet.create({
     backgroundColor:'#141E46',
     flexDirection: 'row',
     padding: 30,
-    borderRadius: 20,
     borderWidth: 1,
     margin: 10,
   },
@@ -364,25 +366,62 @@ const selectWorkoutStyles = StyleSheet.create({
   selectedButton: {
     backgroundColor: '#F06543',
     shadowColor: 'black',
-    
-
-    
   },
 
   selectedText: {
     color: '#141E46',
     fontWeight: 'bold',
-
   },
 
 });
 
+/*TOTAL DISTANCE STYLES*/
 const totalDistances = StyleSheet.create({
   total:{
     flexDirection: 'row',
-
+    backgroundColor: '#141E46',
+    color: 'white',
+    width: 330,
+    textAlign: 'center',
+    
   },
+
+  text:{
+    textAlign: 'center',
+    fontWeight: 'bold',
+    backgroundColor: '#141E46',
+    marginTop: 6,
+    color: '#F06543',
+  },
+
+
 })
 
 
+/*MODAL STYLES*/
+const modalStyles = StyleSheet.create({
+  list:{
+    padding: 10,
+    backgroundColor: '#141E46',
+    borderTopWidth: 1,
+    borderTopColor: '#FFF5E0',
+    width: '100%',
 
+  },
+
+  text:{
+    color: '#FFF5E0',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    padding: 5,
+    fontSize: 16,
+  },
+
+  buttonContainer:{
+    flexDirection: 'row',
+  },
+
+  button: {
+    
+  }
+})
